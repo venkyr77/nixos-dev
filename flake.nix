@@ -45,6 +45,10 @@
       url = "github:nix-community/NixOS-WSL/main";
     };
     nixpkgs.url = "github:/NixOS/nixpkgs/nixpkgs-unstable";
+    wezterm = {
+      url = "github:wezterm/wezterm?dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -53,7 +57,20 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
   in {
+    formatter.${system} = pkgs.writeShellApplication {
+      name = "format";
+      runtimeInputs = builtins.attrValues {
+        inherit (pkgs) alejandra deadnix fd statix;
+      };
+      text = ''
+        fd "$@" -t f -e nix -x statix fix -- '{}'
+        fd "$@" -t f -e nix -X deadnix -e -- '{}'
+        fd "$@" -t f -e nix -X alejandra '{}'
+      '';
+    };
+
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       modules = [
         nixos-wsl.nixosModules.default

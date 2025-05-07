@@ -6,6 +6,7 @@
 }: {
   environment.systemPackages = [
     inputs.nfl.packages.${system}.default
+    inputs.wezterm.packages.${system}.default
     pkgs.diff-so-fancy
   ];
 
@@ -67,7 +68,7 @@
     };
   };
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 
   wsl.enable = true;
 }
