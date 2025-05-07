@@ -72,7 +72,9 @@
     enable = true;
     hostKeys = [
       {
-        path = "/home/nixos/.ssh/";
+        comment = "venkyrocker7777@gmail.com";
+        openSSHFormat = true;
+        path = "/home/nixos/.ssh/id_ed25519";
         type = "ed25519";
       }
     ];
