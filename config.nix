@@ -68,6 +68,27 @@
     };
   };
 
+  services.openssh = {
+    enable = true;
+    hostKeys = [
+      {
+        path = "/home/nixos/.ssh/";
+        type = "ed25519";
+      }
+    ];
+    settings = {
+      KbdInteractiveAuthentication = false;
+      PasswordAuthentication = false;
+    };
+  };
+
+  users.users.nixos = {
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxkVJ1/14ttFbdAYLjLywXBVDpN1496zrZplqvq96bH venkyrocker7777@gmail.com"
+    ];
+    shell = pkgs.zsh;
+  };
+
   system.stateVersion = "25.05";
 
   wsl.enable = true;
