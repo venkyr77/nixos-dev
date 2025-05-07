@@ -93,9 +93,11 @@
         # sh
         ''
           mkdir -p /home/nixos/.ssh
-          cp -r /home/nixos/ssh_key /home/nixos/.ssh
-          eval `ssh-agent -s`
-          ssh-add /home/nixos/.ssh/id_ed25519.pub
+          sudo cp /home/nixos/ssh_key/id_ed25519 /home/nixos/.ssh
+          sudo cp /home/nixos/ssh_key/id_ed25519.pub /home/nixos/.ssh
+          sudo chmod 755 /home/nixos/.ssh
+          sudo chmod 755 /home/nixos/.ssh/id_ed25519
+          sudo chmod 755 /home/nixos/.ssh/id_ed25519.pub
         '')
     ];
     shell = pkgs.zsh;
