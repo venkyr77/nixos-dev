@@ -88,6 +88,16 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxkVJ1/14ttFbdAYLjLywXBVDpN1496zrZplqvq96bH venkyrocker7777@gmail.com"
     ];
+    packages = [
+      (pkgs.writeShellScriptBin "init-key"
+        # sh
+        ''
+          mkdir -p /home/nixos/.ssh
+          cp -r /home/nixos/ssh_key /home/nixos/.ssh
+          eval `ssh-agent -s`
+          ssh-add /home/nixos/.ssh/id_ed25519.pub
+        '')
+    ];
     shell = pkgs.zsh;
   };
 
