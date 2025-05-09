@@ -4,11 +4,23 @@
   system,
   ...
 }: {
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
+
   environment.systemPackages = [
     inputs.nfl.packages.${system}.default
     inputs.wezterm.packages.${system}.default
     pkgs.diff-so-fancy
   ];
+
+  networking = {
+    hostName = "nixos";
+    networkmanager.enable = true;
+  };
+
+  i18n.defaultLocale = "en_US.UTF-8";
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -61,6 +73,9 @@
     zsh = {
       enable = true;
       autosuggestions.enable = true;
+      shellAliases = {
+        "swtch" = "nixos-rebuild switch --flake /etc/nixos/nixos-dev#default --impure";
+      };
       syntaxHighlighting.enable = true;
       interactiveShellInit = ''
         source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
@@ -84,7 +99,15 @@
     };
   };
 
+  time.timeZone = "America/Los_Angeles";
+
+  security.sudo.wheelNeedsPassword = false;
+
+  system.stateVersion = pkgs.lib.mkForce "25.05";
+
   users.users.venky = {
+    extraGroups = ["networkmanager" "wheel"];
+    isNormalUser = true;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxkVJ1/14ttFbdAYLjLywXBVDpN1496zrZplqvq96bH venkyrocker7777@gmail.com"
     ];
@@ -102,6 +125,4 @@
     ];
     shell = pkgs.zsh;
   };
-
-  system.stateVersion = pkgs.lib.mkForce "25.05";
 }
