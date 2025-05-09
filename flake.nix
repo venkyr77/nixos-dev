@@ -4,10 +4,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:/venkyr77/neovim-flake";
     };
-    nixos-generators = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:nix-community/nixos-generators";
-    };
     nixpkgs.url = "github:/NixOS/nixpkgs/nixpkgs-unstable";
     wezterm = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,11 +11,7 @@
     };
   };
 
-  outputs = {
-    nixos-generators,
-    nixpkgs,
-    ...
-  } @ inputs: let
+  outputs = {nixpkgs, ...} @ inputs: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -35,11 +27,13 @@
       '';
     };
 
-    packages.${system}.default = nixos-generators.nixosGenerate {
+    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {inherit inputs system;};
-      modules = [./config.nix];
-      format = "install-iso";
+      modules = [
+        /etc/nixos/configuration.nix
+        ./config.nix
+      ];
     };
   };
 }

@@ -74,7 +74,7 @@
       {
         comment = "venkyrocker7777@gmail.com";
         openSSHFormat = true;
-        path = "/home/nixos/ssh_key/id_ed25519";
+        path = "/home/venky/ssh_key/id_ed25519";
         type = "ed25519";
       }
     ];
@@ -84,7 +84,7 @@
     };
   };
 
-  users.users.nixos = {
+  users.users.venky = {
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxkVJ1/14ttFbdAYLjLywXBVDpN1496zrZplqvq96bH venkyrocker7777@gmail.com"
     ];
@@ -92,16 +92,16 @@
       (pkgs.writeShellScriptBin "init-key"
         # sh
         ''
-          mkdir -p /home/nixos/.ssh
-          sudo cp /home/nixos/ssh_key/id_ed25519 /home/nixos/.ssh
-          sudo cp /home/nixos/ssh_key/id_ed25519.pub /home/nixos/.ssh
-          sudo chmod 755 /home/nixos/.ssh
-          sudo chmod 755 /home/nixos/.ssh/id_ed25519
-          sudo chmod 755 /home/nixos/.ssh/id_ed25519.pub
+          mkdir -p /home/venky/.ssh
+          sudo cp /home/venky/ssh_key/id_ed25519 /home/venky/.ssh
+          sudo cp /home/venky/ssh_key/id_ed25519.pub /home/venky/.ssh
+          sudo chmod 755 /home/venky/.ssh
+          sudo chmod 755 /home/venky/.ssh/id_ed25519
+          sudo chmod 755 /home/venky/.ssh/id_ed25519.pub
         '')
     ];
     shell = pkgs.zsh;
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = pkgs.lib.mkForce "25.05";
 }
