@@ -1,5 +1,9 @@
 {
   inputs = {
+    disko = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:/nix-community/disko";
+    };
     nfl = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:/venkyr77/neovim-flake";
@@ -7,11 +11,11 @@
     nixpkgs.url = "github:/NixOS/nixpkgs/nixpkgs-unstable";
     wezterm = {
       inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:wezterm/wezterm?dir=nix";
+      url = "github:/wezterm/wezterm?dir=nix";
     };
   };
 
-  outputs = {nixpkgs, ...} @ inputs: let
+  outputs = {disko, nixpkgs, ...} @ inputs: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -31,8 +35,9 @@
       inherit system;
       specialArgs = {inherit inputs system;};
       modules = [
-        /etc/nixos/hardware-configuration.nix
+        disko.nixosModules.disko
         ./config.nix
+        ./disko.nix
       ];
     };
   };

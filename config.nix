@@ -4,9 +4,20 @@
   system,
   ...
 }: {
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+    };
+    initrd.availableKernelModules = [
+      "ahci"
+      "nvme"
+      "sd_mod"
+      "usb_storage"
+      "usbhid"
+      "xhci_pci"
+    ];
+    kernelModules = ["kvm-intel"];
   };
 
   environment.systemPackages = [
@@ -15,12 +26,33 @@
     pkgs.diff-so-fancy
   ];
 
+  hardware = {
+    cpu.intel.updateMicrocode = true;
+    enableRedistributableFirmware = true;
+  };
+
+  i18n = let
+    defaultLocale = "en_US.UTF-8";
+  in {
+    inherit defaultLocale;
+    extraLocaleSettings = {
+      LC_ADDRESS = defaultLocale;
+      LC_IDENTIFICATION = defaultLocale;
+      LC_MEASUREMENT = defaultLocale;
+      LC_MONETARY = defaultLocale;
+      LC_NAME = defaultLocale;
+      LC_NUMERIC = defaultLocale;
+      LC_PAPER = defaultLocale;
+      LC_TELEPHONE = defaultLocale;
+      LC_TIME = defaultLocale;
+    };
+  };
+
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
+    useDHCP = pkgs.lib.mkDefault true;
   };
-
-  i18n.defaultLocale = "en_US.UTF-8";
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -28,7 +60,10 @@
     "pipe-operators"
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    hostPlatform = {inherit system;};
+  };
 
   programs = {
     git = {
@@ -99,11 +134,11 @@
     };
   };
 
-  time.timeZone = "America/Los_Angeles";
-
   security.sudo.wheelNeedsPassword = false;
 
   system.stateVersion = pkgs.lib.mkForce "25.05";
+
+  time.timeZone = "America/Los_Angeles";
 
   users.users.venky = {
     extraGroups = ["networkmanager" "wheel"];
