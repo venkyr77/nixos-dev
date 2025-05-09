@@ -74,7 +74,7 @@
       enable = true;
       autosuggestions.enable = true;
       shellAliases = {
-        "swtch" = "sudo nixos-rebuild switch --flake /etc/nixos/nixos-dev#default --impure";
+        "swtch" = "sudo nixos-rebuild switch --flake /home/venky/nixos-dev#default --impure";
       };
       syntaxHighlighting.enable = true;
       interactiveShellInit = ''
