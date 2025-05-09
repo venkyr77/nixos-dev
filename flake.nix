@@ -4,9 +4,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:/nix-community/disko";
     };
+    flake-compat.url = "github:/edolstra/flake-compat";
     nfl = {
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        nixpkgs.follows = "nixpkgs";
+      };
       url = "github:/venkyr77/neovim-flake";
+    };
+    nixos-wsl = {
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:nix-community/NixOS-WSL/main";
     };
     nixpkgs.url = "github:/NixOS/nixpkgs/nixpkgs-unstable";
     wezterm = {
@@ -15,7 +26,12 @@
     };
   };
 
-  outputs = {disko, nixpkgs, ...} @ inputs: let
+  outputs = {
+    disko,
+    nixos-wsl,
+    nixpkgs,
+    ...
+  } @ inputs: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
@@ -31,14 +47,23 @@
       '';
     };
 
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {inherit inputs system;};
-      modules = [
-        disko.nixosModules.disko
-        ./config.nix
-        ./disko.nix
-      ];
+    nixosConfigurations = {
+      dev = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {inherit inputs system;};
+        modules = [
+          disko.nixosModules.disko
+          ./hosts/dev
+        ];
+      };
+      wsl = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {inherit inputs system;};
+        modules = [
+          nixos-wsl.nixosModules.default
+          ./hosts/wsl
+        ];
+      };
     };
   };
 }

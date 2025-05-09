@@ -4,32 +4,11 @@
   system,
   ...
 }: {
-  boot = {
-    loader = {
-      efi.canTouchEfiVariables = true;
-      systemd-boot.enable = true;
-    };
-    initrd.availableKernelModules = [
-      "ahci"
-      "nvme"
-      "sd_mod"
-      "usb_storage"
-      "usbhid"
-      "xhci_pci"
-    ];
-    kernelModules = ["kvm-intel"];
-  };
-
   environment.systemPackages = [
     inputs.nfl.packages.${system}.default
     inputs.wezterm.packages.${system}.default
     pkgs.diff-so-fancy
   ];
-
-  hardware = {
-    cpu.intel.updateMicrocode = true;
-    enableRedistributableFirmware = true;
-  };
 
   i18n = let
     defaultLocale = "en_US.UTF-8";
@@ -46,12 +25,6 @@
       LC_TELEPHONE = defaultLocale;
       LC_TIME = defaultLocale;
     };
-  };
-
-  networking = {
-    hostName = "nixos";
-    networkmanager.enable = true;
-    useDHCP = pkgs.lib.mkDefault true;
   };
 
   nix.settings.experimental-features = [
@@ -109,7 +82,7 @@
       enable = true;
       autosuggestions.enable = true;
       shellAliases = {
-        "swtch" = "sudo nixos-rebuild switch --flake /home/venky/nixos-dev#default --impure";
+        "swtch" = "sudo nixos-rebuild switch --flake /home/venky/nixos-dev#default";
       };
       syntaxHighlighting.enable = true;
       interactiveShellInit = ''
