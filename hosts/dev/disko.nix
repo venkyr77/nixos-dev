@@ -12,7 +12,7 @@
             mountpoint = "/boot";
             type = "filesystem";
           };
-          size = "500M";
+          size = "512M";
           type = "EF00";
         };
         root = {
