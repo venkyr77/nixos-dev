@@ -1,2 +1,2 @@
-# nixos-wsl
-Personal nixos WSL system for development
+# nixos-dev
+Personal nixos system for development
