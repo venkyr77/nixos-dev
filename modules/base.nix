@@ -114,7 +114,7 @@
     hashedPassword = "$6$rounds=100000$81lL0Tq73HWTg9t8$51JWZI39k6odWCSW9Fi3uyyqwNvwp/V283of7mPb3FfUePdK3Ncwr6L1cWApaI.NyuMQMh7cQjIp2M6J.V36X1";
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxkVJ1/14ttFbdAYLjLywXBVDpN1496zrZplqvq96bH venkyrocker7777@gmail.com"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFqaNY0wqJtkw9KD48iz8yNpueoHY90Tt1zAHa5Nal1YYqYsA4kyVjCF9ZM/MZYcJpCBsXoK8euJWhplqqhgAZo= venkyrocker7777@gmail.com"
     ];
     packages = [
       (pkgs.writeShellScriptBin "init-key"
