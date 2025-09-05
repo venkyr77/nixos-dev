@@ -4,20 +4,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:/nix-community/disko";
     };
-    flake-compat.url = "github:/edolstra/flake-compat";
     nfl = {
-      inputs = {
-        flake-compat.follows = "flake-compat";
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:/venkyr77/neovim-flake";
-    };
-    nixos-wsl = {
-      inputs = {
-        flake-compat.follows = "flake-compat";
-        nixpkgs.follows = "nixpkgs";
-      };
-      url = "github:nix-community/NixOS-WSL/main";
     };
     nixpkgs.url = "github:/NixOS/nixpkgs/nixpkgs-unstable";
     wezterm = {
@@ -28,7 +17,6 @@
 
   outputs = {
     disko,
-    nixos-wsl,
     nixpkgs,
     ...
   } @ inputs: let
@@ -54,14 +42,6 @@
         modules = [
           disko.nixosModules.disko
           ./hosts/dev
-        ];
-      };
-      wsl = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit inputs system;};
-        modules = [
-          nixos-wsl.nixosModules.default
-          ./hosts/wsl
         ];
       };
     };

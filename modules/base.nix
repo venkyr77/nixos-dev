@@ -111,10 +111,10 @@
 
   users.users.venky = {
     extraGroups = ["networkmanager" "wheel"];
-    hashedPassword = "$6$rounds=100000$81lL0Tq73HWTg9t8$51JWZI39k6odWCSW9Fi3uyyqwNvwp/V283of7mPb3FfUePdK3Ncwr6L1cWApaI.NyuMQMh7cQjIp2M6J.V36X1";
+    hashedPassword = "$y$j9T$9cYcKoKnGGu34uPxI9qyA0$lmfn6B8AqlWOBgR3Xrt55Ej3D/J45p4LwxUjpQnPfB9";
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
-      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFqaNY0wqJtkw9KD48iz8yNpueoHY90Tt1zAHa5Nal1YYqYsA4kyVjCF9ZM/MZYcJpCBsXoK8euJWhplqqhgAZo= venkyrocker7777@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlTUXrGWkLvAxORPsjc4mCkBNr1jtKJoJh6fNoj8zYj venkyrocker7777@gmail.com"
     ];
     packages = [
       (pkgs.writeShellScriptBin "init-key"
