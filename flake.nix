@@ -21,29 +21,33 @@
     ...
   } @ inputs: let
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
   in {
-    formatter.${system} = pkgs.writeShellApplication {
-      name = "format";
-      runtimeInputs = builtins.attrValues {
-        inherit (pkgs) alejandra deadnix fd statix;
+    formatter.${system} = let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+      pkgs.writeShellApplication {
+        name = "format";
+        runtimeInputs = builtins.attrValues {
+          inherit (pkgs) alejandra deadnix fd statix;
+        };
+        text = ''
+          fd "$@" -t f -e nix -x statix fix -- '{}'
+          fd "$@" -t f -e nix -X deadnix -e -- '{}'
+          fd "$@" -t f -e nix -X alejandra '{}'
+        '';
       };
-      text = ''
-        fd "$@" -t f -e nix -x statix fix -- '{}'
-        fd "$@" -t f -e nix -X deadnix -e -- '{}'
-        fd "$@" -t f -e nix -X alejandra '{}'
-      '';
-    };
 
-    nixosConfigurations = {
-      dev = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit inputs system;};
-        modules = [
-          disko.nixosModules.disko
-          ./hosts/dev
-        ];
-      };
+    nixosConfigurations.dev = nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {inherit inputs system;};
+      modules = [
+        disko.nixosModules.disko
+        ./modules/base.nix
+        ./modules/disko.nix
+        ./modules/hardware.nix
+        ./modules/programs.nix
+        ./modules/users.nix
+      ];
     };
   };
 }

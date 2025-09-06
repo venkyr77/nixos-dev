@@ -26,7 +26,7 @@
       };
       type = "gpt";
     };
-    device = "/dev/sda";
+    device = "/dev/vda";
     type = "disk";
   };
 }
