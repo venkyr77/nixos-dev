@@ -19,13 +19,13 @@
   networking.hostName = "nixos";
 
   nix.settings = {
-    cores = 2;
+    cores = 1;
     experimental-features = [
       "flakes"
       "nix-command"
       "pipe-operators"
     ];
-    max-jobs = 3;
+    max-jobs = 8;
   };
 
   nixpkgs.config.allowUnfree = true;
