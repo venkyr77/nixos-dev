@@ -6,6 +6,8 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIKq26n2TKyJF/LSKXTjRHlCS1rG4+P/cQkG8dBufDkh venkyrocker7777@gmail.com"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlTUXrGWkLvAxORPsjc4mCkBNr1jtKJoJh6fNoj8zYj venkyrocker7777@gmail.com"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFqaNY0wqJtkw9KD48iz8yNpueoHY90Tt1zAHa5Nal1YYqYsA4kyVjCF9ZM/MZYcJpCBsXoK8euJWhplqqhgAZo= venkyrocker7777@gmail.com
+"
     ];
     packages = [
       (pkgs.writeShellScriptBin "init-key"
