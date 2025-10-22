@@ -16,7 +16,7 @@
     };
   };
 
-  networking.hostName = "nixos";
+  networking.hostName = "dev";
 
   nix.settings = {
     cores = 1;
