@@ -8,6 +8,12 @@
     inputs.nfl.packages.${system}.default
     inputs.wezterm.packages.${system}.default
     pkgs.diff-so-fancy
+    pkgs.go
+    pkgs.nodejs
+    pkgs.pnpm
+    pkgs.typescript
+    pkgs.jq
+    pkgs.claude-code
   ];
 
   programs = {

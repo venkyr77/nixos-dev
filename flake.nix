@@ -9,8 +9,15 @@
       url = "github:/venkyr77/neovim-flake";
     };
     nixpkgs.url = "github:/NixOS/nixpkgs/nixpkgs-unstable";
-    wezterm = {
+    rust-overlay = {
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:/oxalica/rust-overlay";
+    };
+    wezterm = {
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
       url = "github:/wezterm/wezterm?dir=nix";
     };
   };

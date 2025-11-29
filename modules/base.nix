@@ -26,6 +26,7 @@
       "pipe-operators"
     ];
     max-jobs = 8;
+    trusted-users = ["venky"];
   };
 
   nixpkgs.config.allowUnfree = true;
