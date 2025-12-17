@@ -14,6 +14,7 @@
     pkgs.typescript
     pkgs.jq
     pkgs.claude-code
+    pkgs.pgcli
   ];
 
   programs = {
